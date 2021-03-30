@@ -28,4 +28,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('customer', 'CustomerController');
     Route::resource('service', 'ServiceController');
     Route::resource('bill', 'BillController');
+    Route::get('bill/print/{id}', 'BillController@print')->name('bill.print');
 });

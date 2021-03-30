@@ -1,5 +1,13 @@
 @extends('layout.dashboard')
 
+@push('styles')
+<style>
+    /* .new-user {
+        display: none;
+    } */
+</style>
+@endpush
+
 @section('content')
 
 <link rel="stylesheet" href="{{asset('plugins/select2/select2.css')}}">
@@ -59,6 +67,40 @@
                                     Customer/Company is required
                                 </div>
                                 @enderror
+                            </div>
+
+                            <div class="form-group new-user">
+                                <label>New Customer/Company*</label>
+                                <select class="form-control customer-select" name="role" id="">
+                                    <option value="company">Company</option>
+                                    <option value="customer">customer</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group new-user">
+                                <label>Email*</label>
+                                <input type="email" class="form-control" name="user[email]">
+                                <div class="invalid-feedback">
+                                    Email is required
+                                </div>
+                            </div>
+
+                            <div class="form-group new-user">
+                                <label>Contact No*</label>
+                                <input type="tel" class="form-control"
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                    maxlength="10" name="user[contact_no]">
+                                <div class="invalid-feedback">
+                                    Contact is required
+                                </div>
+                            </div>
+
+                            <div class="form-group new-user">
+                                <label>Address*</label>
+                                <input type="address" class="form-control" name="user[address]">
+                                <div class="invalid-feedback">
+                                    Address is required
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -174,6 +216,20 @@
 
     $(document).on('change', 'input[name="service_time"]', function(){
         piceChange()
+    });
+
+    $('.new-user').hide();
+
+    $(document).on('change', '.customer-select', function(){
+        var user = $(this).val();
+
+        if(isNaN(user)){
+            $('.new-user').show();
+            $('.new-user').find('.form-control').attr("required", "");
+        } else {
+            $('.new-user').hide();
+            $('.new-user').find('.form-control').removeAttr("required");
+        }
     });
 
     function piceChange() {

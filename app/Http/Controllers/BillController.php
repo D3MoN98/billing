@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Bill;
+use App\RoleUser;
 use App\Service;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 use PDO;
 
 class BillController extends Controller
@@ -90,19 +93,25 @@ class BillController extends Controller
         ]);
 
         if (!is_numeric($request->user_id)) {
-            dd($request->user_id);
+            $user_id = User::create($request->user)->id;
+            RoleUser::create([
+                'role_id' => $request->role == 'customer' ? 2 : 3,
+                'user_id' => $user_id
+            ]);
+        } else {
+            $user_id = $request->user_id;
         }
 
-        Bill::create([
+        $bill_id = Bill::create([
             'added_by' => Auth::id(),
-            'user_id' => $request->user_id,
+            'user_id' => $user_id,
             'service_id' => $request->service_id,
             'service_time' => $request->service_time,
             'price' => $request->price,
             'is_gst' => $request->is_gst,
         ]);
 
-        return redirect()->route('bill.create')->withSuccess('Bill Added');
+        return redirect()->route('bill.edit', $bill_id)->withSuccess('Bill Added');
     }
 
     /**
@@ -189,5 +198,24 @@ class BillController extends Controller
     {
         Bill::destroy($id);
         return redirect()->back()->withSuccess('Bill deleted');
+    }
+
+    public function print($id)
+    {
+        $bill = Bill::find($id);
+
+        $file = 'storage/invoice/' . uniqid() . '.pdf';
+
+        $pdf = PDF::loadView('invoice', ['bill' => $bill]);
+        Storage::put('public/' . $file, $pdf->output());
+
+        if (file_exists($bill->invoice))
+            unlink($bill->invoice);
+
+        $bill->update([
+            'invoice' => $file
+        ]);
+
+        return $pdf->download('invoice.pdf');
     }
 }

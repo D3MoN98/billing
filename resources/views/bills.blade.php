@@ -110,9 +110,12 @@
                                                 @method('delete')
                                                 <a href="{{route('bill.edit', $bill->id)}}"
                                                     class="btn btn-action btn-info"><i class="fa fa-pencil"
-                                                        aria-hidden="true"></i> Edit</a>
+                                                        aria-hidden="true"></i></a>
                                                 <button class="btn btn-action btn-danger delete"><i class="fa fa-trash"
-                                                        aria-hidden="true"></i> Delete</button>
+                                                        aria-hidden="true"></i></button>
+                                                <a href="{{route('bill.print', $bill->id)}}"
+                                                    class="btn btn-action btn-primary"><i class="fa fa-print"
+                                                        aria-hidden="true"></i></a>
                                             </form>
                                         </td>
                                     </tr>
