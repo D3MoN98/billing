@@ -86,7 +86,7 @@
                 <td align="right">{{$bill->service->service_time}}</td>
                 <td align="right">{{$bill->service->service_time_uom}}</td>
                 <td align="right">{{$bill->service->cost}}</td>
-                <td align="right">{{$bill->service->service_time * $bill->service->cost}}</td>
+                <td align="right">{{$bill->service_time * $bill->service->cost}}</td>
             </tr>
         </tbody>
 
@@ -94,13 +94,13 @@
             <tr>
                 <td colspan="4"></td>
                 <td align="right">Subtotal Rs</td>
-                <td align="right">{{$bill->service->service_time * $bill->service->cost}}</td>
+                <td align="right">{{$bill->service_time * $bill->service->cost}}</td>
             </tr>
             @if ($bill->is_gst)
             <tr>
                 <td colspan="4"></td>
                 <td align="right">Gst 28% Rs</td>
-                <td align="right">{{($bill->service->service_time * $bill->service->cost) * 28 /100}}</td>
+                <td align="right">{{($bill->service_time * $bill->service->cost) * 28 /100}}</td>
             </tr>
             @endif
             <tr>

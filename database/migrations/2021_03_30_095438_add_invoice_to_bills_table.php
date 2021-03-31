@@ -14,7 +14,7 @@ class AddInvoiceToBillsTable extends Migration
     public function up()
     {
         Schema::table('bills', function (Blueprint $table) {
-            $table->text('invoice')->after('is_gst');
+            $table->text('invoice')->nullable()->after('is_gst');
         });
     }
 
