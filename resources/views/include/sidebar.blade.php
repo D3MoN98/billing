@@ -6,8 +6,8 @@
                 <span class="pulse bg-success" aria-hidden="true"></span>
             </div>
             <div class="user-info">
-                <h6 class=" mb-1 text-dark">Alica Nestle</h6>
-                <span class="text-muted app-sidebar__user-name text-sm"> Web-Designer</span>
+                <h6 class=" mb-1 text-dark">{{ucwords(strtolower(Auth::user()->name))}}</h6>
+                <span class="text-muted app-sidebar__user-name text-sm"> {{Auth::user()->roles()->first()->name}}</span>
             </div>
         </div>
     </div>

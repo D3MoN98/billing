@@ -23,20 +23,21 @@
         </li>
         <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg d-flex">
                 <span class="mr-3 mt-2 d-none d-lg-block ">
-                    <span class="text-white">Hello,<span class="ml-1"> Alica Nestle</span></span>
+                    <span class="text-white">Hello,<span class="ml-1">
+                            {{ucwords(strtolower(Auth::user()->name))}}</span></span>
                 </span>
                 <span><img src="{{ asset('img/avatar/avatar-3.jpeg') }}" alt="profile-user"
                         class="rounded-circle w-32 mr-2"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class=" dropdown-header noti-title text-center border-bottom pb-3">
-                    <h5 class="text-capitalize text-dark mb-1">Alica Nestle</h5>
-                    <small class="text-overflow m-0"> Web-Designer</small>
+                    <h5 class="text-capitalize text-dark mb-1">{{ucwords(strtolower(Auth::user()->name))}}</h5>
+                    <small class="text-overflow m-0"> {{Auth::user()->roles()->first()->name}}</small>
                 </div>
-                <a class="dropdown-item" href="profile.html"><i class="mdi mdi-account-outline mr-2"></i>
-                    <span>My profile</span></a>
+                {{-- <a class="dropdown-item" href="profile.html"><i class="mdi mdi-account-outline mr-2"></i>
+                    <span>My profile</span></a> --}}
 
-                <div class="dropdown-divider"></div><a class="dropdown-item" href="login.html"><i
+                <div class="dropdown-divider"></div><a class="dropdown-item" href="{{route('logout')}}"><i
                         class="mdi  mdi-logout-variant mr-2"></i> <span>Logout</span></a>
             </div>
         </li>

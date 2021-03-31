@@ -204,6 +204,8 @@ class BillController extends Controller
     {
         $bill = Bill::find($id);
 
+        // return view('invoice')->with('bill', $bill);
+
         $file = 'storage/invoice/' . uniqid() . '.pdf';
 
         $pdf = PDF::loadView('invoice', ['bill' => $bill]);
@@ -215,6 +217,8 @@ class BillController extends Controller
         $bill->update([
             'invoice' => $file
         ]);
+
+        $pdf->setPaper('A4', 'landscape');
 
         return $pdf->download('invoice.pdf');
     }
