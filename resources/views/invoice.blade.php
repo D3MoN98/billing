@@ -83,7 +83,7 @@
             <tr>
                 <th scope="row">1</th>
                 <td>{{$bill->service->name}}</td>
-                <td align="right">{{$bill->service->service_time}}</td>
+                <td align="right">{{$bill->service_time}}</td>
                 <td align="right">{{$bill->service->service_time_uom}}</td>
                 <td align="right">{{$bill->service->cost}}</td>
                 <td align="right">{{$bill->service_time * $bill->service->cost}}</td>
