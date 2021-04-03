@@ -54,7 +54,9 @@
                                 <select class="form-control customer-select" name="user_id" id="" required>
                                     <option value="">Select customer</option>
                                     @foreach ($customers as $customer)
-                                    <option value="{{$customer->id}}">{{$customer->name}}</option>
+                                    <option value="{{$customer->id}}">
+                                        {{$customer->name . ' - ' . ucwords(strtolower($customer->roles()->first()->name))}}
+                                    </option>
                                     @endforeach
                                 </select>
 
@@ -100,6 +102,14 @@
                                 <input type="address" class="form-control" name="user[address]">
                                 <div class="invalid-feedback">
                                     Address is required
+                                </div>
+                            </div>
+
+                            <div class="form-group new-user">
+                                <label>Shipping Address*</label>
+                                <input type="address" class="form-control" name="user[shipping_address]">
+                                <div class="invalid-feedback">
+                                    Shipping Address is required
                                 </div>
                             </div>
 

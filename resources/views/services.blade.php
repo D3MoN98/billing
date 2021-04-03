@@ -24,6 +24,7 @@
                             <table id="example" class="table table-striped table-bordered border-t0 text-nowrap w-100">
                                 <thead>
                                     <tr>
+                                        <th class="wd-15p">#</th>
                                         <th class="wd-15p">Name</th>
                                         <th class="wd-20p">Service Time</th>
                                         <th class="wd-20p">Cost</th>
@@ -33,8 +34,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                    $i = 1
+                                    @endphp
                                     @foreach ($services as $service)
                                     <tr>
+                                        <td>
+                                            {{$i}}
+                                            @php
+                                            $i++
+                                            @endphp
+                                        </td>
                                         <td>{{$service->name}}</td>
                                         <td>{{$service->service_time . ' by ' . $service->service_time_uom }}</td>
                                         <td>{{$service->cost}}</td>

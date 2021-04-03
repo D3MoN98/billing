@@ -23,6 +23,11 @@
         </li>
 
         <li>
+            <a class="side-menu__item" href="{{route('company.index')}}"><i
+                    class="side-menu__icon fa fa-users"></i><span class="side-menu__label">Companies</span></a>
+        </li>
+
+        <li>
             <a class="side-menu__item" href="{{route('service.index')}}"><i class="side-menu__icon fa fa-cogs"></i><span
                     class="side-menu__label">Services</span></a>
         </li>

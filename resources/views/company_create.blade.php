@@ -15,10 +15,10 @@
             <div class="col-12 ">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Create Customer</h4>
+                        <h4>Create Company</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{route('customer.store')}}" class="needs-validation" method="post" novalidate>
+                        <form action="{{route('company.store')}}" class="needs-validation" method="post" novalidate>
                             @csrf
 
                             <div class="form-group">
@@ -71,11 +71,13 @@
                                 <label>Address</label>
                                 <input type="address" class="form-control" value="{{old('address')}}" name="address">
                             </div>
+
                             <div class="form-group">
                                 <label>Shipping Address</label>
                                 <input type="address" class="form-control" value="{{old('shipping_address')}}"
                                     name="shipping_address">
                             </div>
+
                             <button type="submit" class="btn btn-primary">Create</button>
                         </form>
                     </div>

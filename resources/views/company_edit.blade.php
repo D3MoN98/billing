@@ -15,16 +15,19 @@
             <div class="col-12 ">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Create Customer</h4>
+                        <h4>Edit Company</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{route('customer.store')}}" class="needs-validation" method="post" novalidate>
+                        <form action="{{route('company.update', $company->id)}}" class="needs-validation" method="post"
+                            novalidate>
                             @csrf
+
+                            @method('put')
 
                             <div class="form-group">
                                 <label>Name*</label>
                                 <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name"
-                                    value="{{old('name')}}" required>
+                                    value="{{old('name') ?? $company->name}}" required>
 
                                 @error('name')
                                 <div class="invalid-feedback">
@@ -39,7 +42,7 @@
                             <div class="form-group">
                                 <label>Email*</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{old('email')}}" required>
+                                    name="email" value="{{old('email') ?? $company->email}}" required>
 
                                 @error('email')
                                 <div class="invalid-feedback">
@@ -55,7 +58,8 @@
                                 <label>Contact No*</label>
                                 <input type="tel" class="form-control @error('contact_no') is-invalid @enderror"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                    maxlength="10" name="contact_no" value="{{old('contact_no')}}" required>
+                                    maxlength="10" name="contact_no"
+                                    value="{{old('contact_no') ??  $company->contact_no}}" required>
 
                                 @error('contact_no')
                                 <div class="invalid-feedback">
@@ -69,14 +73,18 @@
                             </div>
                             <div class="form-group">
                                 <label>Address</label>
-                                <input type="address" class="form-control" value="{{old('address')}}" name="address">
+                                <input type="address" class="form-control"
+                                    value="{{old('address') ?? $company->address }}" name="address">
                             </div>
+
                             <div class="form-group">
                                 <label>Shipping Address</label>
-                                <input type="address" class="form-control" value="{{old('shipping_address')}}"
+                                <input type="address" class="form-control"
+                                    value="{{old('shipping_address') ?? $company->shipping_address }}"
                                     name="shipping_address">
                             </div>
-                            <button type="submit" class="btn btn-primary">Create</button>
+
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>
                 </div>

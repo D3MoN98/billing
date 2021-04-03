@@ -60,7 +60,7 @@
         </tr>
         <tr>
             <td>
-                {{$bill->user->address}}
+                {{$bill->user->shipping_address}}
             </td>
         </tr>
 

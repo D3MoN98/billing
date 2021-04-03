@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 use PDO;
@@ -53,7 +54,7 @@ class BillController extends Controller
         }
 
 
-        return view('bills')->with('bills', $bills->get());
+        return view('bills')->with('bills', $bills->orderBy('created_at', 'desc')->get());
     }
 
     /**
@@ -66,7 +67,7 @@ class BillController extends Controller
         $customers = User::whereHas(
             'roles',
             function ($q) {
-                $q->where('name', 'customer');
+                $q->whereIn('name', ['customer', 'company']);
             }
         )->get();
         $services = Service::all();
@@ -93,7 +94,10 @@ class BillController extends Controller
         ]);
 
         if (!is_numeric($request->user_id)) {
-            $user_id = User::create($request->user)->id;
+            $user = $request->user;
+            $user['name'] = $request->user_id;
+            $user['password'] = Hash::make(uniqid());
+            $user_id = User::create($user)->id;
             RoleUser::create([
                 'role_id' => $request->role == 'customer' ? 2 : 3,
                 'user_id' => $user_id
@@ -111,7 +115,7 @@ class BillController extends Controller
             'is_gst' => $request->is_gst,
         ]);
 
-        return redirect()->route('bill.edit', $bill_id)->withSuccess('Bill Added');
+        return redirect()->route('bill.index')->withSuccess('Bill Added');
     }
 
     /**

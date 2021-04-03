@@ -13,9 +13,9 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Customers</h4>
+                        <h4>Companies</h4>
                         <span class="table-add float-right">
-                            <a href="{{route('customer.create')}}" class="btn btn-icon"><i class="fa fa-plus fa-1x"
+                            <a href="{{route('company.create')}}" class="btn btn-icon"><i class="fa fa-plus fa-1x"
                                     aria-hidden="true"></i></a>
                         </span>
                     </div>
@@ -24,7 +24,7 @@
                             <table id="example" class="table table-striped table-bordered border-t0 text-nowrap w-100">
                                 <thead>
                                     <tr>
-                                        <th class="wd-15p">#</th>
+                                        <th class="wd-15p">Id</th>
                                         <th class="wd-15p">Name</th>
                                         <th class="wd-20p">Email</th>
                                         <th class="wd-20p">Contact No</th>
@@ -37,7 +37,7 @@
                                     @php
                                     $i = 1
                                     @endphp
-                                    @foreach ($customers as $customer)
+                                    @foreach ($companies as $company)
                                     <tr>
                                         <td>
                                             {{$i}}
@@ -45,17 +45,17 @@
                                             $i++
                                             @endphp
                                         </td>
-                                        <td>{{$customer->name}}</td>
-                                        <td>{{$customer->email}}</td>
-                                        <td>{{$customer->contact_no}}</td>
-                                        <td>{{$customer->created_at}}</td>
-                                        <td>{{$customer->updated_at}}</td>
+                                        <td>{{$company->name}}</td>
+                                        <td>{{$company->email}}</td>
+                                        <td>{{$company->contact_no}}</td>
+                                        <td>{{$company->created_at}}</td>
+                                        <td>{{$company->updated_at}}</td>
                                         <td>
                                             <form class="delete-form" method="POST"
-                                                action="{{route('customer.destroy', $customer->id)}}">
+                                                action="{{route('company.destroy', $company->id)}}">
                                                 @csrf
                                                 @method('delete')
-                                                <a href="{{route('customer.edit', $customer->id)}}"
+                                                <a href="{{route('company.edit', $company->id)}}"
                                                     class="btn btn-action btn-info"><i class="fa fa-pencil"
                                                         aria-hidden="true"></i> Edit</a>
                                                 <button class="btn btn-action btn-danger delete"><i class="fa fa-trash"

@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\RoleUser;
 use App\User;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
-class CustomerController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,14 +16,14 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = User::whereHas(
+        $companies = User::whereHas(
             'roles',
             function ($q) {
-                $q->where('name', 'customer');
+                $q->where('name', 'company');
             }
         )->orderBy('created_at', 'desc')->get();
 
-        return view('customers')->with('customers', $customers);
+        return view('companies')->with('companies', $companies);
     }
 
     /**
@@ -36,7 +33,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customer_create');
+        return view('company_create');
     }
 
     /**
@@ -64,10 +61,10 @@ class CustomerController extends Controller
 
         RoleUser::create([
             'user_id' => $id,
-            'role_id' => 2
+            'role_id' => 3
         ]);
 
-        return redirect()->route('customer.index')->withSuccess('Customer Added');
+        return redirect()->route('company.create')->withSuccess('company Added');
     }
 
     /**
@@ -78,9 +75,9 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $customer = User::find($id);
+        $company = User::find($id);
 
-        return view('customer_edit')->with('customer', $customer);
+        return view('company_edit')->with('company', $company);
     }
 
     /**
@@ -91,9 +88,9 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $customer = User::find($id);
+        $company = User::find($id);
 
-        return view('customer_edit')->with('customer', $customer);
+        return view('company_edit')->with('company', $company);
     }
 
     /**
@@ -120,7 +117,7 @@ class CustomerController extends Controller
         ]);
 
 
-        return redirect()->route('customer.edit', $id)->withSuccess('Customer Updated');
+        return redirect()->route('company.edit', $id)->withSuccess('company Updated');
     }
 
     /**
@@ -132,6 +129,6 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
-        return redirect()->back()->withSuccess('Customer deleted');
+        return redirect()->back()->withSuccess('company deleted');
     }
 }

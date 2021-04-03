@@ -26,6 +26,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('dashboard', 'AuthController@dashboard')->name('dashboard');
     Route::get('logout', 'AuthController@logout')->name('logout');
     Route::resource('customer', 'CustomerController');
+    Route::resource('company', 'CompanyController');
     Route::resource('service', 'ServiceController');
     Route::resource('bill', 'BillController');
     Route::get('bill/print/{id}', 'BillController@print')->name('bill.print');

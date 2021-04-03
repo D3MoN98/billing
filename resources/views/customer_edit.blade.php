@@ -76,6 +76,12 @@
                                 <input type="address" class="form-control"
                                     value="{{old('address') ?? $customer->address }}" name="address">
                             </div>
+                            <div class="form-group">
+                                <label>Shipping Address</label>
+                                <input type="address" class="form-control"
+                                    value="{{old('shipping_address') ?? $customer->shipping_address }}"
+                                    name="shipping_address">
+                            </div>
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>

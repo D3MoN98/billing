@@ -6,5 +6,9 @@
 4 bill list - records, filter -> date, name, amount (< = >), gst/non gst - done
 
 5 role -> admin, staff (can be deactivate, password can be changed only by admin)
-5 pdf bill invoice generete
+5 pdf bill invoice generete - done
 5 Excel genereate
+
+company section - done
+after add bill it will go to show - done
+add shipping address

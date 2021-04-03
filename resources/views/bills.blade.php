@@ -76,6 +76,8 @@
                             <table id="example" class="table table-striped table-bordered border-t0 text-nowrap w-100">
                                 <thead>
                                     <tr>
+                                        <th class="wd-20p">#</th>
+                                        <th class="wd-20p">Id</th>
                                         <th class="wd-20p">Customer</th>
                                         <th class="wd-20p">Service</th>
                                         <th class="wd-20p">Service Time</th>
@@ -87,8 +89,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                    $i = 1;
+                                    @endphp
                                     @foreach ($bills as $bill)
                                     <tr>
+                                        <td>{{$i}}
+                                            @php
+                                            $i++
+                                            @endphp
+                                        </td>
+                                        <td>{{$bill->id}}</td>
                                         <td>{{$bill->user->name}}</td>
                                         <td>{{$bill->service->name}}</td>
                                         <td>{{$bill->service_time }} {{$bill->service_time > 1 ? 'hours' : 'hour'}}
