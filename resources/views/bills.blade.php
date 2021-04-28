@@ -80,11 +80,12 @@
                                         <th class="wd-20p">Id</th>
                                         <th class="wd-20p">Customer</th>
                                         <th class="wd-20p">Service</th>
+                                        <th class="wd-20p">Service Date</th>
                                         <th class="wd-20p">Service Time</th>
                                         <th class="wd-20p">Price</th>
                                         <th class="wd-20p">Gst/Non Gst</th>
                                         <th class="wd-15p">Created At</th>
-                                        <th class="wd-10p">Updated At</th>
+                                        <th class="wd-15p">Updated At</th>
                                         <th class="wd-25p">Action</th>
                                     </tr>
                                 </thead>
@@ -100,9 +101,21 @@
                                             @endphp
                                         </td>
                                         <td>{{$bill->id}}</td>
-                                        <td>{{$bill->user->name}}</td>
-                                        <td>{{$bill->service->name}}</td>
-                                        <td>{{$bill->service_time }} {{$bill->service_time > 1 ? 'hours' : 'hour'}}
+                                        <td>{{$bill->user->name ?? null}}</td>
+                                        <td>
+                                            @foreach ($bill->service_id as $item)
+                                            {{App\Service::find($item)->name}} <br>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach ((array) $bill->service_date as $item)
+                                            {{$item['start_date'] . '-' .$item['end_date']}} <br>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach ($bill->service_time as $item)
+                                            {{$item }} {{$item > 1 ? 'hours' : 'hour'}}<br>
+                                            @endforeach
                                         </td>
                                         <td>{{$bill->price}}</td>
                                         <td class="text-center">

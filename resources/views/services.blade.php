@@ -29,7 +29,6 @@
                                         <th class="wd-20p">Service Time</th>
                                         <th class="wd-20p">Cost</th>
                                         <th class="wd-15p">Created At</th>
-                                        <th class="wd-10p">Updated At</th>
                                         <th class="wd-25p">Action</th>
                                     </tr>
                                 </thead>
@@ -48,8 +47,7 @@
                                         <td>{{$service->name}}</td>
                                         <td>{{$service->service_time . ' by ' . $service->service_time_uom }}</td>
                                         <td>{{$service->cost}}</td>
-                                        <td>{{$service->created_at}}</td>
-                                        <td>{{$service->updated_at}}</td>
+                                        <td>{{$service->created_at->format('d/m/Y')}}</td>
                                         <td>
                                             <form class="delete-form" method="POST"
                                                 action="{{route('service.destroy', $service->id)}}">

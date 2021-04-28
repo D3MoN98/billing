@@ -54,6 +54,7 @@ class CompanyController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'contact_no' => $request->contact_no,
+            'gstn' => $request->gstn,
             'address' => $request->address,
             'shipping_address' => $request->shipping_address,
             'password' => Hash::make('password'),
@@ -112,6 +113,7 @@ class CompanyController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'contact_no' => $request->contact_no,
+            'gstn' => $request->gstn,
             'address' => $request->address,
             'shipping_address' => $request->shipping_address,
         ]);

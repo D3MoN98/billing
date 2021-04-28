@@ -29,7 +29,6 @@
                                         <th class="wd-20p">Email</th>
                                         <th class="wd-20p">Contact No</th>
                                         <th class="wd-15p">Created At</th>
-                                        <th class="wd-10p">Updated At</th>
                                         <th class="wd-25p">Action</th>
                                     </tr>
                                 </thead>
@@ -48,8 +47,7 @@
                                         <td>{{$company->name}}</td>
                                         <td>{{$company->email}}</td>
                                         <td>{{$company->contact_no}}</td>
-                                        <td>{{$company->created_at}}</td>
-                                        <td>{{$company->updated_at}}</td>
+                                        <td>{{$company->created_at->format('d/m/Y')}}</td>
                                         <td>
                                             <form class="delete-form" method="POST"
                                                 action="{{route('company.destroy', $company->id)}}">

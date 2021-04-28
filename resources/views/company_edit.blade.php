@@ -71,6 +71,12 @@
                                 </div>
                                 @enderror
                             </div>
+
+                            <div class="form-group">
+                                <label>Gstn</label>
+                                <input type="text" class="form-control" name="gstn" value="{{$company->gstn}}" required>
+                            </div>
+
                             <div class="form-group">
                                 <label>Address</label>
                                 <input type="address" class="form-control"

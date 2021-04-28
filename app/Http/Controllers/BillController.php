@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bill;
+use App\BillLog;
 use App\RoleUser;
 use App\Service;
 use App\User;
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 use PDO;
+
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
 
 class BillController extends Controller
 {
@@ -89,7 +93,7 @@ class BillController extends Controller
         $request->validate([
             'user_id' => 'required',
             'service_id' => 'required',
-            'service_time' => 'required|numeric',
+            'service_time' => 'required',
             'price' => 'required|numeric',
         ]);
 
@@ -105,15 +109,45 @@ class BillController extends Controller
         } else {
             $user_id = $request->user_id;
         }
+        $services = array_map(function ($key) {
+            return (int) $key;
+        }, $request->service_id);
+
+        $service_times = array_map(function ($key) {
+            return (int) $key;
+        }, $request->service_time);
+
+        $service_dates = array_map(function ($key) {
+            $date = explode('-', str_replace(' ', '', $key));
+            return ['start_date' => $date[0], 'end_date' => $date[1]];
+        }, $request->service_date);
+
+        // dd($service_dates);
+
 
         $bill_id = Bill::create([
             'added_by' => Auth::id(),
             'user_id' => $user_id,
-            'service_id' => $request->service_id,
-            'service_time' => $request->service_time,
+            'service_id' => $services,
+            'service_time' => $service_times,
+            'service_date' => $service_dates,
             'price' => $request->price,
             'is_gst' => $request->is_gst,
-        ]);
+        ])->id;
+
+        $log = $request->log;
+
+        foreach ($request->log['date'] as $key => $value) {
+            $bill_log['bill_id'] = $bill_id;
+            $bill_log['date'] = $value;
+            $bill_log['time_in'] = $log['time_in'][$key];
+            $bill_log['time_out'] = $log['time_out'][$key];
+            $bill_log['lunch_time'] = $log['lunch_time'][$key];
+            $bill_log['day'] = $log['day'][$key];
+            $bill_log['total_time'] = $log['total_time'][$key];
+
+            BillLog::create($bill_log);
+        }
 
         return redirect()->route('bill.index')->withSuccess('Bill Added');
     }
@@ -151,6 +185,7 @@ class BillController extends Controller
     public function edit($id)
     {
         $bill = Bill::find($id);
+
         $customers = User::whereHas(
             'roles',
             function ($q) {
@@ -177,16 +212,57 @@ class BillController extends Controller
     {
         $request->validate([
             'service_id' => 'required',
-            'service_time' => 'required|numeric',
+            'service_time' => 'required',
             'price' => 'required|numeric',
         ]);
 
-        Bill::find($id)->update([
-            'service_id' => $request->service_id,
-            'service_time' => $request->service_time,
+        $services = array_map(function ($key) {
+            return (int) $key;
+        }, $request->service_id);
+
+        $service_times = array_map(function ($key) {
+            return (int) $key;
+        }, $request->service_time);
+
+        $service_dates = array_map(function ($key) {
+            $date = explode('-', str_replace(' ', '', $key));
+            return ['start_date' => $date[0], 'end_date' => $date[1]];
+        }, $request->service_date);
+
+        $bill = Bill::find($id)->update([
+            'service_id' => $services,
+            'service_time' => $service_times,
+            'service_date' => $service_dates,
             'price' => $request->price,
             'is_gst' => $request->is_gst,
         ]);
+
+        foreach (Bill::find($id)->bill_logs->pluck('id')->toArray() as $key) {
+            if (isset($request->log[$key])) {
+                BillLog::find($key)->update($request->log[$key]);
+            } else {
+                BillLog::destroy($key);
+            }
+        }
+
+        // dd($request->new_log);
+
+        if (isset($request->new_log)) {
+
+            $new_log = $request->new_log;
+
+            foreach ($request->new_log['date'] as $key => $value) {
+                $bill_log['bill_id'] = $id;
+                $bill_log['date'] = $value;
+                $bill_log['time_in'] = $new_log['time_in'][$key];
+                $bill_log['time_out'] = $new_log['time_out'][$key];
+                $bill_log['lunch_time'] = $new_log['lunch_time'][$key];
+                $bill_log['day'] = $new_log['day'][$key];
+                $bill_log['total_time'] = $new_log['total_time'][$key];
+
+                BillLog::create($bill_log);
+            }
+        }
 
 
         return redirect()->route('bill.edit', $id)->withSuccess('Bill Updated');
@@ -208,7 +284,7 @@ class BillController extends Controller
     {
         $bill = Bill::find($id);
 
-        // return view('invoice')->with('bill', $bill);
+        return view('invoice')->with(['bill' => $bill]);
 
         $file = 'storage/invoice/' . uniqid() . '.pdf';
 

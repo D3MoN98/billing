@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg main-navbar">
-    <a class="header-brand" href="index.html">
+    <a class="header-brand" href="{{route('dashboard')}}">
         <img src="{{asset('img/brand/logo-white.png') }}" class="header-brand-img" alt="Splite-Admin  logo">
     </a>
     <form class="form-inline mr-auto">
